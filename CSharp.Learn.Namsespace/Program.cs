@@ -29,7 +29,9 @@ namespace CSharp.Learn.Namsespace
 
             c = s[0];
 
-            // Denemeeee
+            StringOperations so = new StringOperations();
+            so.StringOp();
+
         }
     }
 }

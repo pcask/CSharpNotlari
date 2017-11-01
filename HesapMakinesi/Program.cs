@@ -10,8 +10,6 @@ namespace HesapMakinesi
     {
         static void Main(string[] args)
         {
-            string devamEdecekMi = "";
-
             do
             {
                 Console.Write("Yapmak İstediğiniz İşlemi Yazınız : ");
@@ -54,12 +52,7 @@ namespace HesapMakinesi
 
                 Console.WriteLine("Devam Etmek İstiyor Musunuz? Evet(E), Hayır(H)");
 
-                devamEdecekMi = Console.ReadLine().ToUpper();
-
-            } while (devamEdecekMi == "E");
-
-
-
+            } while (Console.ReadLine().ToUpper() == "E");
         }
     }
 }
