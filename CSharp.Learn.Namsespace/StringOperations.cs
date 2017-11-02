@@ -9,9 +9,8 @@ namespace CSharp.Learn.Namsespace
     class StringOperations
     {
 
-        public void StringOp()
+        public void KelimeSayisiBul()
         {
-
             Console.WriteLine("Lütfen Paragraf Giriniz");
 
             string paragraf = Console.ReadLine();
@@ -21,36 +20,79 @@ namespace CSharp.Learn.Namsespace
             string[,] kelimeVeSayisi = new string[kelimeler.Length, 2];
 
             bool dahaOnceEklenmisMi = false;
-
+            byte adim = 0;
             for (int i = 0; i < kelimeler.Length; i++)
             {
                 int sayac = 1;
+                dahaOnceEklenmisMi = false;
 
-                for (int k = i + 1; k < kelimeler.Length; k++)
+                for (int j = 0; j < kelimeler.Length; j++)
                 {
-
-                    if (kelimeler[i] == kelimeler[k])
+                    if (kelimeVeSayisi[j, 0] == kelimeler[i])
                     {
-                        for (int j = 0; j < kelimeVeSayisi.GetLength(0); j++)
-                        {
-                            if (kelimeVeSayisi[j, 0] == kelimeler[i])
-                                dahaOnceEklenmisMi = true;
-                        }
-
-                        if (!dahaOnceEklenmisMi)
-                        {
-                            sayac++;
-
-                            dahaOnceEklenmisMi = false;
-                        }
+                        dahaOnceEklenmisMi = true;
+                        break;
                     }
                 }
 
-                kelimeVeSayisi[i, 0] = kelimeler[i];
-                kelimeVeSayisi[i, 1] = sayac.ToString();
+                if (dahaOnceEklenmisMi)
+                    continue;
+
+                for (int k = i + 1; k < kelimeler.Length; k++)
+                {
+                    if (kelimeler[i] == kelimeler[k])
+                        sayac++;
+                }
+
+                kelimeVeSayisi[adim, 0] = kelimeler[i];
+                kelimeVeSayisi[adim, 1] = sayac.ToString();
+
+                adim++;
             }
 
-            Console.WriteLine("deneme");
+            for (int i = 0; i < kelimeVeSayisi.GetLength(0); i++)
+            {
+                for (int k = 0; k < kelimeVeSayisi.GetLength(1); k++)
+                {
+                    if (kelimeVeSayisi[i, k] != null)
+                    {
+                        Console.Write(kelimeVeSayisi[i, k] + " ");
+                    }
+                }
+            }
+        }
+
+        public void GirisKontrol()
+        {
+            do
+            {
+                Console.Write("Lütfen Geçerli Bir Metin Giriniz :");
+            } while (string.IsNullOrWhiteSpace(Console.ReadLine().Trim()));
+        }
+
+        public void KelimeHarfSayisi()
+        {
+
+            Console.WriteLine("Lütfen Bir Makale Giriniz");
+
+            //string girilenMakale = Console.ReadLine().Replace(",", "").Replace(".", "").Replace(";", "").Replace(":", "").Trim();
+
+            // Boşluğa göre split yaparken gelen empty değerlerini almamak için StringSplitOptions.RemoveEmptyEntries kullanılır.
+            string[] kelimeler = Console.ReadLine().Split(new char[] { ' ', '.', ',', ':', ';', '!' }, StringSplitOptions.RemoveEmptyEntries);
+            int enBuyukHarfSayisi = 0;
+            string kelime = "";
+
+            for (int i = 0; i < kelimeler.Length; i++)
+            {
+                if (enBuyukHarfSayisi < kelimeler[i].Length)
+                {
+                    enBuyukHarfSayisi = kelimeler[i].Length;
+                    kelime = kelimeler[i];
+                }
+            }
+
+            Console.WriteLine("En çok harf sayisi {0} ile {1} kelimesine aittir", enBuyukHarfSayisi, kelime);
+
         }
     }
 }

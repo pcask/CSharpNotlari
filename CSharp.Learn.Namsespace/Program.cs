@@ -30,7 +30,9 @@ namespace CSharp.Learn.Namsespace
             c = s[0];
 
             StringOperations so = new StringOperations();
-            so.StringOp();
+            so.KelimeHarfSayisi();
+
+            Console.ReadLine();
 
         }
     }
