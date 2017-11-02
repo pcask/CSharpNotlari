@@ -29,11 +29,13 @@ namespace CSharp.Learn.Namsespace
 
             c = s[0];
 
-            StringOperations so = new StringOperations();
-            so.KelimeHarfSayisi();
+            var di = new Diziler();
+            di.Dizi();
 
-            Console.ReadLine();
-
+            var so = new StringOperations();
+            //so.StringMetodlari();
+            //so.GirilenMetinBosMuKontroluYap();
+            //so.EnUzunKelimeyiBul();
         }
     }
 }

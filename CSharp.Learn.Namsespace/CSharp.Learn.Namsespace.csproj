@@ -48,6 +48,7 @@
     <Compile Include="Diziler.cs" />
     <Compile Include="Donguler.cs" />
     <Compile Include="KararYapıları.cs" />
+    <Compile Include="Operators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringOperations.cs" />

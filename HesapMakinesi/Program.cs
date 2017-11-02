@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,47 +11,34 @@ namespace HesapMakinesi
         {
             do
             {
-                Console.Write("Yapmak İstediğiniz İşlemi Yazınız : ");
+                Console.Write("İşlemi giriniz: ");
+                var islem = Console.ReadLine();
 
-                string yapilacakIslem = Console.ReadLine();
+                var islemSayi = islem.Split(new[] { '+', '-', '*', '/' });
 
-                string[] ifadeElemanlari = yapilacakIslem.Split(new char[] { '+', '-', '*', '/' });
+                var sayi1 = int.Parse(islemSayi[0]);
+                var sayi2 = int.Parse(islemSayi[1]);
 
-                //1. Yol) İşlemi Alma
-                string islem = yapilacakIslem.Substring(ifadeElemanlari[0].Length, 1);
-
-                //2. Yol) İşlemi Alma
-                //string islem2 = yapilacakIslem.Replace(ifadeElemanlari[0], "").Replace(ifadeElemanlari[1], "");
-
-                int birinciEleman = int.Parse(ifadeElemanlari[0]);
-                int ikinciEleman = int.Parse(ifadeElemanlari[1]);
-
-                double sonuc = 0;
-
-                switch (islem)
+                if (islem.IndexOf('+') > -1)
                 {
-                    case "+":
-                        sonuc = birinciEleman + ikinciEleman;
-                        break;
-                    case "-":
-                        sonuc = birinciEleman - ikinciEleman;
-                        break;
-                    case "*":
-                        sonuc = birinciEleman * ikinciEleman;
-                        break;
-                    case "/":
-                        sonuc = birinciEleman / ikinciEleman;
-                        break;
-                    default:
-                        Console.WriteLine("Lütfen Doğru Bir İşlem Giriniz");
-                        break;
+                    Console.WriteLine(sayi1 + sayi2);
+                }
+                else if (islem.IndexOf('-') > -1)
+                {
+                    Console.WriteLine(sayi1 - sayi2);
+                }
+                else if (islem.IndexOf('*') > -1)
+                {
+                    Console.WriteLine(sayi1 * sayi2);
+                }
+                else if (islem.IndexOf('/') > -1)
+                {
+                    Console.WriteLine(sayi1 / sayi2);
                 }
 
-                Console.WriteLine("İşleminizin Sonucu = " + sonuc);
+                Console.Write("devam etmek istiyor musunuz? ");
 
-                Console.WriteLine("Devam Etmek İstiyor Musunuz? Evet(E), Hayır(H)");
-
-            } while (Console.ReadLine().ToUpper() == "E");
+            } while (Console.ReadLine() == "e");
         }
     }
 }
