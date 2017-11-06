@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace Abstraction
 {
-    class Soyutlama
-    {
-
-    }
-
-
     class Televizyon
     {
         public string Tip { get; set; }
