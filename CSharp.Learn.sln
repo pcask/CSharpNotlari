@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Learn.Namsespace", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HesapMakinesi", "HesapMakinesi\HesapMakinesi.csproj", "{50C8BFD0-CBE3-43B4-8128-8D384BC80871}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bina", "Bina\Bina.csproj", "{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaYonetim", "BinaYonetim\BinaYonetim.csproj", "{C80B9B63-E417-43C7-9A50-149A949348F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{50C8BFD0-CBE3-43B4-8128-8D384BC80871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50C8BFD0-CBE3-43B4-8128-8D384BC80871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50C8BFD0-CBE3-43B4-8128-8D384BC80871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C80B9B63-E417-43C7-9A50-149A949348F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C80B9B63-E417-43C7-9A50-149A949348F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C80B9B63-E417-43C7-9A50-149A949348F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C80B9B63-E417-43C7-9A50-149A949348F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A5F90B86-EDB9-4AD3-A293-220C2F355D20} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 		{50C8BFD0-CBE3-43B4-8128-8D384BC80871} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
+		{E055ECB2-C4B4-4A90-BBC4-0A29FECC6A31} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
+		{C80B9B63-E417-43C7-9A50-149A949348F0} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 	EndGlobalSection
 EndGlobal

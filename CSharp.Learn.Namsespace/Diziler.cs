@@ -10,7 +10,7 @@ namespace CSharp.Learn.Namsespace
 
         public void Dizi()
         {
-            //Dizi tanımlanırken tip belirtilmesi zorunluıdur
+            //Dizi tanımlanırken tip belirtilmesi zorunludur
             //Tip belirlendikten sonra diziye sadece o tipte elemanlar atanabilir
             //Dizi oluşturulurken kaç eleman alacağı belirtilmek zorundadır
             //Dizinin eleman sayısı belirlendikten sonra değiştirilemez
