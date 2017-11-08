@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OOP", "OOP", "{977DCF78-16C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstraction", "Abstraction\Abstraction.csproj", "{E0D5B1EE-34BC-4C1C-9958-0A2B0D2E3758}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inheritance", "Inheritance\Inheritance.csproj", "{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{E0D5B1EE-34BC-4C1C-9958-0A2B0D2E3758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0D5B1EE-34BC-4C1C-9958-0A2B0D2E3758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0D5B1EE-34BC-4C1C-9958-0A2B0D2E3758}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,7 +39,6 @@ Global
 		{A5F90B86-EDB9-4AD3-A293-220C2F355D20} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 		{35C14B8B-F3D1-4BE8-91A8-9429FD044CDF} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 		{E0D5B1EE-34BC-4C1C-9958-0A2B0D2E3758} = {977DCF78-16CC-49AB-9D55-8D3E5BF7402F}
-		{B3FE2B35-74B1-4638-8F4F-BC5EAE80291C} = {977DCF78-16CC-49AB-9D55-8D3E5BF7402F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C750670-6C87-4E35-9AA5-F0B62776FD42}
