@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bina
+namespace Bina.Kapi
 {
     public class GelismisDaireKapisi: DaireKapisi
     {
@@ -21,6 +21,12 @@ namespace Bina
             {
                 Console.WriteLine("TANIMADIM.");
             }
+        }
+
+        public override void KapiyiAc()
+        {
+            Console.WriteLine("Kapı dönerek açıldı.");
+            base.KapiyiAc();
         }
     }
 }

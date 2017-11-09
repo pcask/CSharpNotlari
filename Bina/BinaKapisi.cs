@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bina
+namespace Bina.Kapi
 {
     //Derived Class
     //Sub Class

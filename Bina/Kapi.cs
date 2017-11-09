@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bina
+namespace Bina.Kapi
 {
     //Base Class
     //Super Class
@@ -13,9 +13,9 @@ namespace Bina
     {
         public string Govde;
         public string Kulp;
-        public string Kilit;
+        public Kilit Kilit;
 
-        public void KapiyiAc()
+        public virtual void KapiyiAc()
         {
             Console.WriteLine("Kapı açıldı.");
         }
@@ -23,6 +23,11 @@ namespace Bina
         public void KapiyiKapat()
         {
             Console.WriteLine("Kapı kapandı.");
+        }
+
+        public virtual void KapidanGir(string kim)
+        {
+            Console.WriteLine($"{kim} kapıdan girdi.");
         }
     }
 }

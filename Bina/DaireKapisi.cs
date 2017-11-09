@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bina
+namespace Bina.Kapi
 {
     //Derived Class
     //Sub Class
@@ -9,6 +9,23 @@ namespace Bina
     {
         public string Durbun;
         public string SurmeKilit;
+
+        public override void KapiyiAc()
+        {
+            Console.WriteLine("Kapı içeri doğru hareket ettir.");
+            base.KapiyiAc();
+        }
+
+        public void KapiyiKapat()
+        {
+            Console.WriteLine("Daire kapısı kapandı.");
+            base.KapiyiKapat();
+        }
+
+        public override void KapidanGir(string kim)
+        {
+            Console.WriteLine($"{kim} daire kapısından girdi.");
+        }
 
         /* Kapi class'ının inheritance edilmesi sonucu BinaKapisi class'ına kazandırılan öğeler
         public string Govde;
