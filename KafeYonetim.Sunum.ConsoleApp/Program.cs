@@ -16,18 +16,27 @@ namespace KafeYonetim.Sunum.ConsoleApp
             KafeyeUrunEkle(kafe);
             KafeyeCalisanEkle(kafe);
             KafeyeMasaEkle(kafe);
-
+            kafe.Ac();
+            
 
             ConsoleKeyInfo secim;
             do
             {
                 MenuYazdir();
 
+                Console.Write("Lütfen Yapmak İstediğiniz İşlem Numarasını Giriniz :");
+
                 secim = Console.ReadKey();
 
                 switch (secim.KeyChar)
                 {
-                    case '1': MasayaGarsonCagir();
+                    case '1': MasayaGarsonCagir(kafe);
+                        break;
+                    case '2':
+                        GarsonuMasadanGonder(kafe);
+                        break;
+                    case '3':
+                        SiparisVer(kafe);
                         break;
                     default:
                         break;
@@ -39,18 +48,38 @@ namespace KafeYonetim.Sunum.ConsoleApp
             Console.ReadLine();
         }
 
-        public static void MasayaGarsonCagir()
+        public static void MasayaGarsonCagir(Kafe kafe)
         {
-            Console.WriteLine("Masa numarasını belirtin :");
+            Console.Write("\nMasa numarasını belirtin :");
             int masaNo = int.Parse(Console.ReadLine());
+
+            kafe.Masalar[masaNo].GarsonCagir();
+        }
+
+        public static void GarsonuMasadanGonder(Kafe kafe)
+        {
+            Console.Clear();
+            Console.Write("Masa numarası giriniz :");
+            int masaNo = int.Parse(Console.ReadLine());
+            kafe.Masalar[masaNo].GarsonuSerbestBirak();
+            Console.WriteLine("Garson Gitti");
+
         }
 
         public static void MenuYazdir()
         {
-            Console.WriteLine("Menü");
+            Console.WriteLine("\nMenü");
             Console.WriteLine("1. Garson Çağır.");
-            Console.WriteLine("2. Garsona Sipariş Ver ");
+            Console.WriteLine("2. Garsonu Serbest Bırak");
+            Console.WriteLine("3. Garsona Sipariş Ver");
+            Console.WriteLine("0. Uygulamayı Kapat");
             Console.WriteLine("");
+
+        }
+
+        public static void SiparisVer()
+        {
+
         }
 
         public static Kafe KafeInstanceOlustur()
@@ -66,26 +95,26 @@ namespace KafeYonetim.Sunum.ConsoleApp
 
         public static void KafeyeUrunEkle(Kafe kafe)
         {
-            kafe.Urunler[0] = new Urun("Çay", 9.00f, true);
-            kafe.Urunler[1] = new Urun("Kahve", 12.00f, true);
-            kafe.Urunler[2] = new Urun("Gazoz", 12.00f, true);
-            kafe.Urunler[3] = new Urun("Tombalıklı Sandwich", 16.00f, true);
-            kafe.Urunler[4] = new Urun("Pekin Usulü Ördek", 150.00f, true);
-        }
+            kafe.Urunler.Add(new Urun("Çay", 9.00f, true));
+            kafe.Urunler.Add(new Urun("Kahve", 12.00f, true));
+            kafe.Urunler.Add(new Urun("Gazoz", 12.00f, true));
+            kafe.Urunler.Add(new Urun("Tombalıklı Sandwich", 16.00f, true));
+            kafe.Urunler.Add(new Urun("Pekin Usulü Ördek", 150.00f, true));
+        }               
 
         public static void KafeyeCalisanEkle(Kafe kafe)
         {
-            kafe.Calisanlar[0] = new Garson("Ahmet", new DateTime(2017, 11, 08));
-            kafe.Calisanlar[1] = new Garson("Mehmet", new DateTime(2017, 11, 08));
-            kafe.Calisanlar[2] = new Asci("Berk", new DateTime(2017, 11, 08));
+            kafe.Calisanlar.Add(new Garson("Ahmet", new DateTime(2017, 11, 08)));
+            kafe.Calisanlar.Add(new Garson("Mehmet", new DateTime(2017, 11, 08)));
+            kafe.Calisanlar.Add(new Asci("Berk", new DateTime(2017, 11, 08)));
         }
 
         public static void KafeyeMasaEkle(Kafe kafe)
         {
-            kafe.Masalar[0] = new Masa(1);
-            kafe.Masalar[1] = new Masa(2);
-            kafe.Masalar[2] = new Masa(3);
-            kafe.Masalar[3] = new Masa(4);
+            kafe.Masalar.Add(new Masa(1, kafe));
+            kafe.Masalar.Add(new Masa(2, kafe));
+            kafe.Masalar.Add(new Masa(3, kafe));
+            kafe.Masalar.Add(new Masa(4, kafe));
         }
     }
 }

@@ -17,25 +17,30 @@ namespace KafeYonetim.Lib
 
             Durum = KafeDurum.Kapali;
 
-            Urunler = new Urun[500];
-            Calisanlar = new Calisan[50];
-            Masalar = new Masa[200];
-            Siparisler = new Siparis[500];
+            Urunler = new List<Urun>();
+            Calisanlar = new List<Calisan>();
+            Masalar = new List<Masa>();
+            Siparisler = new List<Siparis>();
         }
 
         public string Ad { get; private set; }
         public string AcilisSaati { get; private set; }
         public string KapanisSaati { get; private set; }
         public KafeDurum Durum { get; private set; }
-        public Calisan[] Calisanlar { get; set; }
-        public Urun[] Urunler { get; set; }
-        public Masa[] Masalar { get; set; }
-        public Siparis[] Siparisler { get; set; }
+        public List<Calisan> Calisanlar { get; set; }
+        public List<Urun> Urunler { get; set; }
+        public List<Masa> Masalar { get; set; }
+        public List<Siparis> Siparisler { get; set; }
 
         public void Ac()
         {
             Durum = KafeDurum.Acik;
             Console.WriteLine("Kafemiz Açılmıştır");
+
+            foreach (var calisan in Calisanlar)
+            {
+                calisan.MesaiyeBasla();
+            }
         }
 
         public void Kapat()
@@ -44,6 +49,41 @@ namespace KafeYonetim.Lib
             Console.WriteLine("Kafemiz Kapanmıştır");
         }
 
+
+        public Garson UygunGarsonuBul(CalisanDurum yeniDurum)
+        {
+            foreach (var calisan in Calisanlar)
+            {
+                if (!(calisan is Garson))
+                {
+                    continue;
+                }
+
+                if (calisan.MesaideMi && calisan.Durum == CalisanDurum.Uygun)
+                {
+                    calisan.Durum = yeniDurum;
+                    return (Garson)calisan;
+                }
+            }
+            return null;
+        }
+        public Asci UygunAsciBul(CalisanDurum yeniDurum)
+        {
+            foreach (var calisan in Calisanlar)
+            {
+                if (!(calisan is Asci))
+                {
+                    continue;
+                }
+
+                if (calisan.MesaideMi && calisan.Durum == CalisanDurum.Uygun)
+                {
+                    calisan.Durum = yeniDurum;
+                    return (Asci)calisan;
+                }
+            }
+            return null;
+        }
     }
 
 }
