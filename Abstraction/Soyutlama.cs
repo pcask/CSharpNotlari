@@ -11,7 +11,6 @@ namespace Abstraction
 
     }
 
-
     class Televizyon
     {
         public string Tip { get; set; }
@@ -34,7 +33,6 @@ namespace Abstraction
 
         public string Mensei { get; set; }
         public byte GarantiSuresiAy { get; set; }
-
 
         private bool CalismaDurumu { get; set; }
         private byte SesSeviyesi { get; set; }
