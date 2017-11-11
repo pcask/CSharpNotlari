@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basics", "Basics", "{EFAF0107-0A41-4796-A95A-6340D7DA6116}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafeYonetim.Sunum.ConsoleApp", "KafeYonetim.Sunum.ConsoleApp\KafeYonetim.Sunum.ConsoleApp.csproj", "{BFF026D0-5E6F-435A-90EE-04F5B14292C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inheritance", "Inheritance\Inheritance.csproj", "{F82D359B-0C87-4824-93E9-5D08A541112E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ornekler", "Ornekler\Ornekler.csproj", "{D3A3B431-5737-4E3D-AF12-A310A602826D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{F82D359B-0C87-4824-93E9-5D08A541112E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F82D359B-0C87-4824-93E9-5D08A541112E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F82D359B-0C87-4824-93E9-5D08A541112E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A3B431-5737-4E3D-AF12-A310A602826D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A3B431-5737-4E3D-AF12-A310A602826D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A3B431-5737-4E3D-AF12-A310A602826D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A3B431-5737-4E3D-AF12-A310A602826D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{CB8C3D8A-5440-4164-A1BF-A899442E9F87} = {4C53432A-8C88-43BA-A81A-235A7D0604BF}
 		{BFF026D0-5E6F-435A-90EE-04F5B14292C7} = {4C53432A-8C88-43BA-A81A-235A7D0604BF}
 		{F82D359B-0C87-4824-93E9-5D08A541112E} = {977DCF78-16CC-49AB-9D55-8D3E5BF7402F}
+		{D3A3B431-5737-4E3D-AF12-A310A602826D} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C750670-6C87-4E35-9AA5-F0B62776FD42}
