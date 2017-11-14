@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basics", "Basics", "{EFAF0107-0A41-4796-A95A-6340D7DA6116}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafeYonetim.Data", "KafeYonetim.Data\KafeYonetim.Data.csproj", "{0DFFD6AF-C260-492E-A6F3-0D6E68FDE0D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafeYonetim.Sunum.AnaUygulama", "KafeYonetim.Sunum.AnaUygulama\KafeYonetim.Sunum.AnaUygulama.csproj", "{D5BE6533-2742-433D-8D7B-57DB8AE7FF90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{D31C519F-3719-42E4-AC4F-F3294A7D1E36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMvcIlkProje", "AspNetMvcIlkProje\AspNetMvcIlkProje.csproj", "{D74DC8E3-D811-480F-A027-637979635FDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,10 @@ Global
 		{D5BE6533-2742-433D-8D7B-57DB8AE7FF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5BE6533-2742-433D-8D7B-57DB8AE7FF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5BE6533-2742-433D-8D7B-57DB8AE7FF90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D74DC8E3-D811-480F-A027-637979635FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D74DC8E3-D811-480F-A027-637979635FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D74DC8E3-D811-480F-A027-637979635FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D74DC8E3-D811-480F-A027-637979635FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,7 @@ Global
 		{D3A3B431-5737-4E3D-AF12-A310A602826D} = {EFAF0107-0A41-4796-A95A-6340D7DA6116}
 		{0DFFD6AF-C260-492E-A6F3-0D6E68FDE0D4} = {4C53432A-8C88-43BA-A81A-235A7D0604BF}
 		{D5BE6533-2742-433D-8D7B-57DB8AE7FF90} = {4C53432A-8C88-43BA-A81A-235A7D0604BF}
+		{D74DC8E3-D811-480F-A027-637979635FDA} = {D31C519F-3719-42E4-AC4F-F3294A7D1E36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C750670-6C87-4E35-9AA5-F0B62776FD42}
