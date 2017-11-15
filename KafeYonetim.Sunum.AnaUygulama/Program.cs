@@ -65,7 +65,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             Console.Clear();
 
-            //Console.Write("Id".PadLeft(7));
+            Console.WriteLine("Ürün Listesi Eşik Değeri\n".PadLeft(40));
             BaslikFormatliYazdir(basliklar);
 
             UrunFormatliYazdir(liste);
@@ -99,6 +99,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
         private static void UrunListesiniYazdir()
         {
             List<Urun> urunler = DataManager.UrunListesiniYazdir();
+
+            Console.WriteLine("Ürün Listesi\n".PadLeft(30));
 
             BaslikFormatliYazdir(basliklar);
 
