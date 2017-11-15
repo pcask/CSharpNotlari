@@ -43,26 +43,28 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
-        public void UrunListesiniYazdir()
+        public static List<Urun> UrunListesiniYazdir()
         {
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
-
-            connection.Open();
-
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
-
-            var result = cmd.ExecuteReader();
-
-            while (result.Read())
+            using (var connection = CreateConnection())
             {
-                Console.WriteLine($"Urun Adı: {result["Ad"]}");
-                Console.WriteLine($"Urun Fiyatı: {result["Fiyat"]}");
-                Console.WriteLine($"Stokta Var Mı: {result["StoktaVarMi"]}");
-                Console.WriteLine();
-            }
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
 
-            result.Close();
-            connection.Close();
+                var result = cmd.ExecuteReader();
+
+                List<Urun> urunListesi = new List<Urun>();
+
+                while (result.Read())
+                {
+                    Urun urun = new Urun(result["Ad"].ToString(), Convert.ToSingle(result["Fiyat"]), (bool)result["StoktaVarMi"]);
+
+                    urunListesi.Add(urun);
+                }
+
+                result.Close();
+                connection.Close();
+
+                return urunListesi;
+            }
         }
 
         public void KafeAdınıYazdir()
@@ -109,6 +111,27 @@ namespace KafeYonetim.Data
         }
 
 
+        public static bool UrunGir(string ad, double fiyat, bool stoktaVarMi)
+        {
+            using (var connection = CreateConnection())
+            {
+                var command = new SqlCommand("INSERT INTO Urunler (ad, fiyat, stoktavarmi) VALUES (@ad, @fiyat, @stoktaVarMi)", connection);
+                command.Parameters.AddWithValue("@ad", ad);
+                command.Parameters.AddWithValue("@fiyat", fiyat);
+                command.Parameters.AddWithValue("@stoktaVarMi", stoktaVarMi);
+
+                var result = command.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+        }
+
 
         public static List<Urun> DegerdenYuksekFiyatliUrunleriGetir(double esikDeger)
         {
@@ -125,7 +148,7 @@ namespace KafeYonetim.Data
                     while (result.Read())
                     {
 
-                        Urun urun = new Urun(result["ad"].ToString(), (float)result["Fiyat"], (bool)result["StoktaVarMi"]);
+                        Urun urun = new Urun(result["Ad"].ToString(), Convert.ToSingle(result["Fiyat"]), (bool)result["StoktaVarMi"]);
 
                         urunListesi.Add(urun);
                     }
