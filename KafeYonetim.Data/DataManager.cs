@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KafeYonetim.Lib;
 
 namespace KafeYonetim.Data
 {
@@ -120,22 +121,17 @@ namespace KafeYonetim.Data
 
                 using (var result = command.ExecuteReader())
                 {
-
                     while (result.Read())
                     {
 
-                        Urun urun = new Urun(result["ad"], (float)result["Fiyat"], (bool)result["StoktaVarMi"]);
+                        Urun urun = new Urun(result["ad"].ToString(), (float)result["Fiyat"], (bool)result["StoktaVarMi"]);
 
                         urunListesi.Add(urun);
                     }
-
                 }
 
                 return urunListesi;
             }
-
-
         }
-
     }
 }
