@@ -93,7 +93,7 @@ namespace KafeYonetim.Data
             Console.Write("Lütfen Eklemek İstediğiniz Ürünün Fiyatını Giriniz: ");
             double urunFiyati = double.Parse(Console.ReadLine());
             Console.Write("Lütfen Eklemek İstediğiniz Ürünün Stok Durumunu (Var = E, Yok = H) Giriniz: ");
-            bool urunStok = (Console.ReadLine().ToLower() == "e") ? true : false; 
+            bool urunStok = (Console.ReadLine().ToLower() == "e") ? true : false;
 
 
 
@@ -108,31 +108,32 @@ namespace KafeYonetim.Data
         }
 
 
-        public static void DegerdenYuksekFiyatliUrunleriGetir()
+        public static List<Urun> DegerdenYuksekFiyatliUrunleriGetir(double esikDeger)
         {
             using (var connection = CreateConnection())
             {
 
-                Console.Write("Bir değer giriniz: ");
-                var deger = Console.ReadLine();
-
                 var command = new SqlCommand("SELECT * FROM Urunler WHERE fiyat > @deger", connection);
-                command.Parameters.AddWithValue("@deger", double.Parse(deger));
+                command.Parameters.AddWithValue("@deger", esikDeger);
+
+                var urunListesi = new List<Urun>();
 
                 using (var result = command.ExecuteReader())
                 {
 
                     while (result.Read())
                     {
-                        Console.Write($"{result["ad"]}");
-                        Console.Write($"{result["Fiyat"]}");
-                        Console.WriteLine();
+
+                        Urun urun = new Urun(result["ad"], (float)result["Fiyat"], (bool)result["StoktaVarMi"]);
+
+                        urunListesi.Add(urun);
                     }
 
                 }
+
+                return urunListesi;
             }
 
-            Console.ReadLine();
 
         }
 
