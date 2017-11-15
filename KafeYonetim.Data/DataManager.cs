@@ -106,5 +106,35 @@ namespace KafeYonetim.Data
 
             connection.Close();
         }
+
+
+        public static void DegerdenYuksekFiyatliUrunleriGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+
+                Console.Write("Bir değer giriniz: ");
+                var deger = Console.ReadLine();
+
+                var command = new SqlCommand("SELECT * FROM Urunler WHERE fiyat > @deger", connection);
+                command.Parameters.AddWithValue("@deger", double.Parse(deger));
+
+                using (var result = command.ExecuteReader())
+                {
+
+                    while (result.Read())
+                    {
+                        Console.Write($"{result["ad"]}");
+                        Console.Write($"{result["Fiyat"]}");
+                        Console.WriteLine();
+                    }
+
+                }
+            }
+
+            Console.ReadLine();
+
+        }
+
     }
 }
