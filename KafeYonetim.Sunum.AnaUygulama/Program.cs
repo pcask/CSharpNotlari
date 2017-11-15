@@ -24,7 +24,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             DegerdenYuksekFiyatliUrunleriGetir();
 
-            Console.WriteLine("\n*************************\n");
+            Console.WriteLine("\n********************************************\n");
 
             UrunListesiniYazdir();
 
@@ -33,22 +33,13 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
         private static List<string> basliklar = new List<string>() { "Ad", "Fiyat", "Stok" };
 
-        private static void BaslikFormatliYazdir(List<string> basliklar)
+        private static void UrunleriFormatliYazdir(List<Urun> urunler, List<string> basliklar)
         {
             foreach (var baslik in basliklar)
             {
                 Console.Write(baslik.PadRight(20));
             }
-            Console.WriteLine();
-        }
-
-        private static void UrunFormatliYazdir(List<Urun> urunler, List<string> basliklar)
-        {
-            foreach (var baslik in basliklar)
-            {
-                Console.Write(baslik.PadRight(20));
-            }
-            Console.WriteLine();
+            Console.WriteLine("\n");
 
             foreach (var urun in urunler)
             {
@@ -58,7 +49,6 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine();
             }
         }
-
 
         private static void DegerdenYuksekFiyatliUrunleriGetir()
         {
@@ -70,9 +60,9 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             Console.Clear();
 
-            Console.WriteLine("Ürün Listesi Eşik Değeri\n".PadLeft(40));
+            Console.WriteLine($"Ürün Listesi Eşik Değerli ({doubleEsikDeger})\n".PadLeft(35));
 
-            UrunFormatliYazdir(liste, basliklar);
+            UrunleriFormatliYazdir(liste, basliklar);
         }
 
         private static void UrunGir()
@@ -106,7 +96,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             Console.WriteLine("Ürün Listesi\n".PadLeft(30));
 
-            UrunFormatliYazdir(urunler, basliklar);
+            UrunleriFormatliYazdir(urunler, basliklar);
         }
     }
 }
