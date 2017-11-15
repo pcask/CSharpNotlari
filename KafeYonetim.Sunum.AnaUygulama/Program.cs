@@ -21,6 +21,9 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             dm.UrunListesiniYazdir();
 
+
+
+
             Console.ReadLine();
         }
     }
