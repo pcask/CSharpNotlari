@@ -9,6 +9,18 @@ namespace KafeYonetim.Data
 {
     public class DataManager
     {
+
+        private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+
+        private static SqlConnection CreateConnection()
+        {
+            var connection = new SqlConnection(connStr);
+            connection.Open();
+
+            return connection;
+        }
+
+
         public void KafeBilgisiniYazdir()
         {
             SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
