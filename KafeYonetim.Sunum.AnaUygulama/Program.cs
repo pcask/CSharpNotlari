@@ -42,15 +42,20 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.WriteLine();
         }
 
-        private static void UrunFormatliYazdir(List<Urun> urunler)
+        private static void UrunFormatliYazdir(List<Urun> urunler, List<string> basliklar)
         {
+            foreach (var baslik in basliklar)
+            {
+                Console.Write(baslik.PadRight(20));
+            }
+            Console.WriteLine();
+
             foreach (var urun in urunler)
             {
                 Console.Write($"{urun.Ad}".PadRight(25));
                 Console.Write($"{urun.Fiyat}".PadRight(15));
                 Console.Write($"{urun.StoktaVarMi}".PadRight(7));
                 Console.WriteLine();
-
             }
         }
 
@@ -66,9 +71,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.Clear();
 
             Console.WriteLine("Ürün Listesi Eşik Değeri\n".PadLeft(40));
-            BaslikFormatliYazdir(basliklar);
 
-            UrunFormatliYazdir(liste);
+            UrunFormatliYazdir(liste, basliklar);
         }
 
         private static void UrunGir()
@@ -98,13 +102,11 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
         private static void UrunListesiniYazdir()
         {
-            List<Urun> urunler = DataManager.UrunListesiniYazdir();
+            List<Urun> urunler = DataManager.UrunleriGetir();
 
             Console.WriteLine("Ürün Listesi\n".PadLeft(30));
 
-            BaslikFormatliYazdir(basliklar);
-
-            UrunFormatliYazdir(urunler);
+            UrunFormatliYazdir(urunler, basliklar);
         }
     }
 }

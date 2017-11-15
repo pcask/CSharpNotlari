@@ -43,7 +43,7 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
-        public static List<Urun> UrunListesiniYazdir()
+        public static List<Urun> UrunleriGetir()
         {
             using (var connection = CreateConnection())
             {
