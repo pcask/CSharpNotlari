@@ -53,6 +53,10 @@
       <Project>{0dffd6af-c260-492e-a6f3-0d6e68fde0d4}</Project>
       <Name>KafeYonetim.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KafeYonetim.Lib\KafeYonetim.Lib.csproj">
+      <Project>{cb8c3d8a-5440-4164-a1bf-a899442e9f87}</Project>
+      <Name>KafeYonetim.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

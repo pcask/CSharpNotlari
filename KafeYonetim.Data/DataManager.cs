@@ -109,6 +109,7 @@ namespace KafeYonetim.Data
         }
 
 
+
         public static List<Urun> DegerdenYuksekFiyatliUrunleriGetir(double esikDeger)
         {
             using (var connection = CreateConnection())
