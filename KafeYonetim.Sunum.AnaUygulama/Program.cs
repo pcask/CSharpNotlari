@@ -12,16 +12,6 @@ namespace KafeYonetim.Sunum.AnaUygulama
     {
         static void Main(string[] args)
         {
-            //DataManager dm = new DataManager();
-
-            //dm.KafeBilgisiniYazdir();
-
-            //dm.UrunEkle();
-
-            //Console.WriteLine("\n************************\n");
-
-            //dm.UrunListesiniYazdir();
-
             do
             {
                 Console.Clear();
@@ -31,6 +21,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("3. Ürün Ekle");
                 Console.WriteLine("4. Stokta Olmayan Ürünleri Getir");
                 Console.WriteLine("5. Ürün Sil");
+                Console.WriteLine("6. Masaları Getir");
+                Console.WriteLine("7. Masa Ekle");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -42,6 +34,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "3": UrunGir(); break;
                     case "4": StoktaOlmayanUrunleriGetir(); break;
                     case "5": UrunleriSil(); break;
+                    case "6": MasalariGetir(); break;
+                    case "7": MasaEkle(); break;
                     case "h": return;
                     default:
                         break;
@@ -50,8 +44,6 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.ReadLine();
 
             } while (true);
-
-
         }
 
         private static List<string> basliklar = new List<string>() { "ID", "Ad", "Fiyat", "Stok" };
@@ -76,6 +68,27 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.WriteLine();
         }
 
+        private static void MasaEkle()
+        {
+            Console.Clear();
+
+            Console.Write("Masa No:");
+            int masaNo = int.Parse(Console.ReadLine());
+
+            Console.Write("Kafe ID:");
+            int kafeID = int.Parse(Console.ReadLine());
+
+            Console.Write("Masa Durumu:");
+            string durum = Console.ReadLine();
+
+            if (DataManager.MasaEkle(masaNo, kafeID, durum))
+                Console.WriteLine("Masa Başarıyla Eklendi");
+            else
+                Console.WriteLine("Masa Eklenirken Bir Hata Oluştu!!!");
+
+            Console.ReadLine();
+        }
+
         private static void UrunGir()
         {
             Console.Clear();
@@ -90,15 +103,16 @@ namespace KafeYonetim.Sunum.AnaUygulama
             bool stokDurumu = Console.ReadLine().ToUpper() == "E";
 
             if (DataManager.UrunGir(urunAdi, fiyat, stokDurumu))
-            {
                 Console.WriteLine("Ürün başarıyla eklendi.");
-            }
             else
-            {
                 Console.WriteLine("Ürün eklenirken bir hata oluştu...");
-            }
 
             Console.ReadLine();
+        }
+
+        private static void MasalariGetir()
+        {
+
         }
 
         private static void DegerdenYuksekFiyatliUrunleriGetir()

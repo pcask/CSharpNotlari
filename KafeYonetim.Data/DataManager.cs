@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using KafeYonetim.Lib;
 
+
 namespace KafeYonetim.Data
 {
     public class DataManager
     {
 
-        private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+        //private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+
+        private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
 
         private static SqlConnection CreateConnection()
         {
@@ -60,27 +63,22 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
-        public void UrunEkle()
+        public static bool MasaEkle(int masaNo, int kafeID, string Durum)
         {
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
+            using( var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO Masalar (MasaNo, KafeID, Durum) VALUES (@masaNo, @kafeID, @durum)", connection);
+                cmd.Parameters.AddWithValue("@masaNo", masaNo);
+                cmd.Parameters.AddWithValue("@kafeID", kafeID);
+                cmd.Parameters.AddWithValue("@durum", Durum);
 
-            connection.Open();
+                int result = cmd.ExecuteNonQuery();
 
-            Console.Write("Lütfen Eklemek İstediğiniz Ürünün Adını Giriniz: ");
-            string urunAdi = Console.ReadLine();
-            Console.Write("Lütfen Eklemek İstediğiniz Ürünün Fiyatını Giriniz: ");
-            double urunFiyati = double.Parse(Console.ReadLine());
-            Console.Write("Lütfen Eklemek İstediğiniz Ürünün Stok Durumunu (Var = E, Yok = H) Giriniz: ");
-            bool urunStok = (Console.ReadLine().ToLower() == "e") ? true : false;
+                if (result > 0)
+                    return true;
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO Urunler (Ad, Fiyat, StoktaVarMi) VALUES (@Ad, @Fiyat, @Stok)", connection);
-            cmd.Parameters.AddWithValue("@Ad", urunAdi);
-            cmd.Parameters.AddWithValue("@Fiyat", urunFiyati);
-            cmd.Parameters.AddWithValue("@Stok", urunStok);
-
-            cmd.ExecuteNonQuery();
-
-            connection.Close();
+                return false;
+            }
         }
 
         public static bool UrunGir(string ad, double fiyat, bool stoktaVarMi)
@@ -116,6 +114,24 @@ namespace KafeYonetim.Data
 
             return urunListesi;
         }
+
+        //public static List<Masa> MasalariGetir()
+        //{
+        //    using (var connection = CreateConnection())
+        //    {
+        //        SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
+
+        //        SqlDataReader reader = cmd.ExecuteReader();
+
+        //        List<Masa> masalar = new List<Masa>();
+
+        //        while (reader.Read())
+        //        {
+        //            Kafe kafe = new Kafe()
+        //            Masa masa = new Masa((int)reader["MasaNo"],)
+        //        }
+        //    }
+        //}
 
         public static List<Urun> UrunleriGetir()
         {
