@@ -30,6 +30,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("2. Eşik Değerden Yüksek Fiyatlı Ürünlerin Listesini Getir");
                 Console.WriteLine("3. Ürün Ekle");
                 Console.WriteLine("4. Stokta Olmayan Ürünleri Getir");
+                Console.WriteLine("5. Ürün Sil");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -40,6 +41,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "2": DegerdenYuksekFiyatliUrunleriGetir(); break;
                     case "3": UrunGir(); break;
                     case "4": StoktaOlmayanUrunleriGetir(); break;
+                    case "5": UrunleriSil(); break;
                     case "h": return;
                     default:
                         break;
@@ -52,7 +54,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
         }
 
-        private static List<string> basliklar = new List<string>() { "Ad", "Fiyat", "Stok" };
+        private static List<string> basliklar = new List<string>() { "ID", "Ad", "Fiyat", "Stok" };
 
         private static void UrunleriFormatliYazdir(List<Urun> urunler, List<string> basliklar)
         {
@@ -64,11 +66,14 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             foreach (var urun in urunler)
             {
+                Console.Write($"{urun.ID}".PadRight(25));
                 Console.Write($"{urun.Ad}".PadRight(25));
                 Console.Write($"{urun.Fiyat}".PadRight(15));
                 Console.Write($"{urun.StoktaVarMi}".PadRight(7));
                 Console.WriteLine();
             }
+
+            Console.WriteLine();
         }
 
         private static void UrunGir()
@@ -127,6 +132,19 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.WriteLine("Ürün Listesi\n".PadLeft(30));
 
             UrunleriFormatliYazdir(urunler, basliklar);
+        }
+
+        private static void UrunleriSil()
+        {
+            UrunListesiniYazdir();
+
+            Console.Write("Silmek istediğiniz ürünlerin Id'lerini virgül ile ayırarak yazınız: ");
+
+            string idList = Console.ReadLine();
+
+            Console.WriteLine(DataManager.SecilenUrunleriSil(idList) + " Adet Ürün Silindi");
+
+            UrunListesiniYazdir();
         }
     }
 }

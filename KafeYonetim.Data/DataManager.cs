@@ -73,8 +73,6 @@ namespace KafeYonetim.Data
             Console.Write("Lütfen Eklemek İstediğiniz Ürünün Stok Durumunu (Var = E, Yok = H) Giriniz: ");
             bool urunStok = (Console.ReadLine().ToLower() == "e") ? true : false;
 
-
-
             SqlCommand cmd = new SqlCommand("INSERT INTO Urunler (Ad, Fiyat, StoktaVarMi) VALUES (@Ad, @Fiyat, @Stok)", connection);
             cmd.Parameters.AddWithValue("@Ad", urunAdi);
             cmd.Parameters.AddWithValue("@Fiyat", urunFiyati);
@@ -111,7 +109,7 @@ namespace KafeYonetim.Data
 
             while (reader.Read())
             {
-                Urun urun = new Urun(reader["Ad"].ToString(), Convert.ToSingle(reader["Fiyat"]), (bool)reader["StoktaVarMi"]);
+                Urun urun = new Urun((int)reader["ID"], reader["Ad"].ToString(), Convert.ToSingle(reader["Fiyat"]), (bool)reader["StoktaVarMi"]);
 
                 urunListesi.Add(urun);
             }
@@ -147,6 +145,16 @@ namespace KafeYonetim.Data
                 cmd.Parameters.AddWithValue("@deger", esikDeger);
 
                 return UrunListesiniHazirla(cmd.ExecuteReader());
+            }
+        }
+
+        public static int SecilenUrunleriSil(string idList)
+        {
+            using (var connection = CreateConnection())
+            {
+                var command = new SqlCommand($"DELETE FROM Urunler WHERE ID IN ({idList}) ", connection);
+
+               return command.ExecuteNonQuery();
             }
         }
     }
