@@ -22,13 +22,34 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             //dm.UrunListesiniYazdir();
 
-            DegerdenYuksekFiyatliUrunleriGetir();
+            do
+            {
+                Console.Clear();
 
-            Console.WriteLine("\n********************************************\n");
+                Console.WriteLine("1. Ürün Listesini Getir");
+                Console.WriteLine("2. Eşik Değerden Yüksek Fiyatlı Ürünlerin Listesini Getir");
+                Console.WriteLine("3. Ürün Ekle");
+                Console.WriteLine("4. Stokta Olmayan Ürünleri Getir");
+                Console.WriteLine();
+                Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
+                var secim = Console.ReadLine();
 
-            UrunListesiniYazdir();
+                switch (secim)
+                {
+                    case "1": UrunListesiniYazdir(); break;
+                    case "2": DegerdenYuksekFiyatliUrunleriGetir(); break;
+                    case "3": UrunGir(); break;
+                    case "4": StoktaOlmayanUrunleriGetir(); break;
+                    case "h": return;
+                    default:
+                        break;
+                }
 
-            Console.ReadLine();
+                Console.ReadLine();
+
+            } while (true);
+
+
         }
 
         private static List<string> basliklar = new List<string>() { "Ad", "Fiyat", "Stok" };
@@ -48,21 +69,6 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.Write($"{urun.StoktaVarMi}".PadRight(7));
                 Console.WriteLine();
             }
-        }
-
-        private static void DegerdenYuksekFiyatliUrunleriGetir()
-        {
-            Console.Clear();
-            Console.Write("Eşik Değeri giriniz: ");
-            var doubleEsikDeger = double.Parse(Console.ReadLine());
-
-            var liste = DataManager.DegerdenYuksekFiyatliUrunleriGetir(doubleEsikDeger);
-
-            Console.Clear();
-
-            Console.WriteLine($"Ürün Listesi Eşik Değerli ({doubleEsikDeger})\n".PadLeft(35));
-
-            UrunleriFormatliYazdir(liste, basliklar);
         }
 
         private static void UrunGir()
@@ -88,6 +94,30 @@ namespace KafeYonetim.Sunum.AnaUygulama
             }
 
             Console.ReadLine();
+        }
+
+        private static void DegerdenYuksekFiyatliUrunleriGetir()
+        {
+            Console.Clear();
+            Console.Write("Eşik Değeri giriniz: ");
+            var doubleEsikDeger = double.Parse(Console.ReadLine());
+
+            var liste = DataManager.DegerdenYuksekFiyatliUrunleriGetir(doubleEsikDeger);
+
+            Console.Clear();
+
+            Console.WriteLine($"Ürün Listesi Eşik Değerli ({doubleEsikDeger})\n".PadLeft(35));
+
+            UrunleriFormatliYazdir(liste, basliklar);
+        }
+
+        private static void StoktaOlmayanUrunleriGetir()
+        {
+            List<Urun> urunler = DataManager.StoktaOlmayanUrunleriGetir();
+
+            Console.WriteLine($"Stokta Olmayan Ürünler".PadLeft(35));
+
+            UrunleriFormatliYazdir(urunler, basliklar);
         }
 
         private static void UrunListesiniYazdir()

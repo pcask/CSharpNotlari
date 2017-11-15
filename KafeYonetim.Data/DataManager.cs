@@ -21,6 +21,23 @@ namespace KafeYonetim.Data
             return connection;
         }
 
+        public void KafeAdınıYazdir()
+        {
+            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
+
+            connection.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM Kafe", connection);
+
+            // Sorgu sonucu geri değer dönmeyecekse ExecuteNonQuery
+            // Sorgu sonucu tek satır tek sütün yani tek bir veri dönecekse ExecuteScalar
+            // Sorgu sonucu bir satır veya daha fazla ayrıca bir sütün veya daha fazla sütün dönecekse ExecuteReader kullanılır.
+            Object result = (string)cmd.ExecuteScalar();
+
+            Console.WriteLine($"Kafe Adı: {result}");
+
+            connection.Close();
+        }
 
         public void KafeBilgisiniYazdir()
         {
@@ -40,48 +57,6 @@ namespace KafeYonetim.Data
             Console.WriteLine($"Kafe Durum: {result["Durum"]}");
 
             result.Close();
-            connection.Close();
-        }
-
-        public static List<Urun> UrunleriGetir()
-        {
-            using (var connection = CreateConnection())
-            {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
-
-                var result = cmd.ExecuteReader();
-
-                List<Urun> urunListesi = new List<Urun>();
-
-                while (result.Read())
-                {
-                    Urun urun = new Urun(result["Ad"].ToString(), Convert.ToSingle(result["Fiyat"]), (bool)result["StoktaVarMi"]);
-
-                    urunListesi.Add(urun);
-                }
-
-                result.Close();
-                connection.Close();
-
-                return urunListesi;
-            }
-        }
-
-        public void KafeAdınıYazdir()
-        {
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
-
-            connection.Open();
-
-            SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM Kafe", connection);
-
-            // Sorgu sonucu geri değer dönmeyecekse ExecuteNonQuery
-            // Sorgu sonucu tek satır tek sütün yani tek bir veri dönecekse ExecuteScalar
-            // Sorgu sonucu bir satır veya daha fazla ayrıca bir sütün veya daha fazla sütün dönecekse ExecuteReader kullanılır.
-            Object result = (string)cmd.ExecuteScalar();
-
-            Console.WriteLine($"Kafe Adı: {result}");
-
             connection.Close();
         }
 
@@ -110,7 +85,6 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
-
         public static bool UrunGir(string ad, double fiyat, bool stoktaVarMi)
         {
             using (var connection = CreateConnection())
@@ -129,32 +103,50 @@ namespace KafeYonetim.Data
 
                 return false;
             }
-
         }
 
+        public static List<Urun> UrunListesiniHazirla(SqlDataReader reader)
+        {
+            List<Urun> urunListesi = new List<Urun>();
+
+            while (reader.Read())
+            {
+                Urun urun = new Urun(reader["Ad"].ToString(), Convert.ToSingle(reader["Fiyat"]), (bool)reader["StoktaVarMi"]);
+
+                urunListesi.Add(urun);
+            }
+
+            return urunListesi;
+        }
+
+        public static List<Urun> UrunleriGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
+
+                return UrunListesiniHazirla(cmd.ExecuteReader());
+            }
+        }
+
+        public static List<Urun> StoktaOlmayanUrunleriGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler Where StoktaVarMi = 'false'", connection);
+
+                return UrunListesiniHazirla(cmd.ExecuteReader());
+            }
+        }
 
         public static List<Urun> DegerdenYuksekFiyatliUrunleriGetir(double esikDeger)
         {
             using (var connection = CreateConnection())
             {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler WHERE fiyat > @deger", connection);
+                cmd.Parameters.AddWithValue("@deger", esikDeger);
 
-                var command = new SqlCommand("SELECT * FROM Urunler WHERE fiyat > @deger", connection);
-                command.Parameters.AddWithValue("@deger", esikDeger);
-
-                var urunListesi = new List<Urun>();
-
-                using (var result = command.ExecuteReader())
-                {
-                    while (result.Read())
-                    {
-
-                        Urun urun = new Urun(result["Ad"].ToString(), Convert.ToSingle(result["Fiyat"]), (bool)result["StoktaVarMi"]);
-
-                        urunListesi.Add(urun);
-                    }
-                }
-
-                return urunListesi;
+                return UrunListesiniHazirla(cmd.ExecuteReader());
             }
         }
     }
