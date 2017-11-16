@@ -42,6 +42,42 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
+        public static Kafe KafeGetir(string kafeID)
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Kafeler WHERE ID = @kafeID", connection);
+
+                cmd.Parameters.AddWithValue("@kafeID", kafeID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                Kafe kafe = new Kafe((int)reader["ID"], reader["Ad"].ToString(), reader["AcilisSaati"].ToString(), reader["KapanisSaati"].ToString());
+
+                return kafe;
+            }
+        }
+
+        public static Kafe AktifKafeyiGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM Kafeler", connection);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+
+                    Kafe kafe = new Kafe((int)reader["ID"], reader["Ad"].ToString(), reader["AcilisSaati"].ToString(), reader["KapanisSaati"].ToString());
+
+                    return kafe;
+                }
+            }
+        }
+
+
         public static List<Kafe> KafeleriGetir()
         {
             using (var connection = CreateConnection())
@@ -129,24 +165,6 @@ namespace KafeYonetim.Data
             }
 
             return urunListesi;
-        }
-
-        public static Kafe KafeGetir(string kafeID)
-        {
-            using (var connection = CreateConnection())
-            {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Kafeler WHERE ID = @kafeID", connection);
-
-                cmd.Parameters.AddWithValue("@kafeID", kafeID);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                reader.Read();
-
-                Kafe kafe = new Kafe((int)reader["ID"], reader["Ad"].ToString(), reader["AcilisSaati"].ToString(), reader["KapanisSaati"].ToString());
-
-                return kafe;
-            }
         }
 
         public static List<Masa> MasalariGetir()

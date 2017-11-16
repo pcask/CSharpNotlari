@@ -16,6 +16,7 @@ namespace KafeYonetim.Lib
             Kafe = kafe;
         }
 
+        public int ID { get; set; }
         public string Isim { get; private set; }
         public DateTime IseGirisTarihi { get; private set; }
         public bool MesaideMi { get; private set; }
