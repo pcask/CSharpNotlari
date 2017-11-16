@@ -21,7 +21,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("3. Ürün Ekle");
                 Console.WriteLine("4. Stokta Olmayan Ürünleri Getir");
                 Console.WriteLine("5. Ürün Sil");
-                Console.WriteLine("6. Masaları Getir");
+                Console.WriteLine("6. Masa Sayısı ve Toplam Kapasite Bilgisini Getir");
                 Console.WriteLine("7. Masa Ekle");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
@@ -34,7 +34,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "3": UrunGir(); break;
                     case "4": StoktaOlmayanUrunleriGetir(); break;
                     case "5": UrunleriSil(); break;
-                    case "6": MasalariGetir(); break;
+                    case "6": MasaSayisiVeToplamKapasiteYazdir(); break;
                     case "7": MasaEkle(); break;
                     case "h": return;
                     default:
@@ -68,25 +68,75 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.WriteLine();
         }
 
+        //private static void MasaEkle()
+        //{
+        //    Console.Clear();
+
+        //    Console.Write("Masa No:");
+        //    int masaNo = int.Parse(Console.ReadLine());
+
+        //    Console.Write("Kafe ID:");
+        //    int kafeID = int.Parse(Console.ReadLine());
+
+        //    Console.Write("Masa Durumu:");
+        //    string durum = Console.ReadLine();
+
+        //    if (DataManager.MasaEkle(masaNo, kafeID, durum))
+        //        Console.WriteLine("Masa Başarıyla Eklendi");
+        //    else
+        //        Console.WriteLine("Masa Eklenirken Bir Hata Oluştu!!!");
+
+        //    Console.ReadLine();
+        //}
+
         private static void MasaEkle()
         {
             Console.Clear();
 
-            Console.Write("Masa No:");
-            int masaNo = int.Parse(Console.ReadLine());
+            KafeleriListele();
 
-            Console.Write("Kafe ID:");
-            int kafeID = int.Parse(Console.ReadLine());
+            Console.Write("Lütfen Yukarıdaki Listeden Masanın Ekleneceği Kafenin ID Bilgisini Giriniz: ");
+            string kafeID = Console.ReadLine();
 
-            Console.Write("Masa Durumu:");
-            string durum = Console.ReadLine();
+            Console.Write("Masa No: ");
+            string masaNo = Console.ReadLine();
 
-            if (DataManager.MasaEkle(masaNo, kafeID, durum))
-                Console.WriteLine("Masa Başarıyla Eklendi");
-            else
-                Console.WriteLine("Masa Eklenirken Bir Hata Oluştu!!!");
+            Console.Write("Kapasitesi: ");
+            byte kapasite = byte.Parse(Console.ReadLine());
 
-            Console.ReadLine();
+            Masa masa = new Masa(masaNo, DataManager.KafeGetir(kafeID));
+            masa.KisiSayisi = kapasite;
+            masa.Durum = MasaDurum.Bos;
+
+            int masaID = DataManager.MasaEkle(masa);
+
+            Console.WriteLine("Masa Başarıyla Eklendi");
+        }
+
+
+        private static void KafeleriListele()
+        {
+            List<Kafe> kafeler = DataManager.KafeleriGetir();
+
+            Console.WriteLine("Kafeler\n".PadLeft(40));
+
+            Console.Write("ID".PadRight(20));
+            Console.Write("Ad".PadRight(20));
+            Console.Write("Acilis Saati".PadRight(20));
+            Console.Write("Kapaniş Saati".PadRight(20));
+            Console.WriteLine();
+
+            foreach (var kafe in kafeler)
+            {
+                Console.Write($"{kafe.ID}".PadRight(20));
+                Console.Write($"{kafe.Ad}".PadRight(20));
+                Console.Write($"{kafe.AcilisSaati}".PadRight(20));
+                Console.Write($"{kafe.KapanisSaati}".PadRight(20));
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
         }
 
         private static void UrunGir()
@@ -110,9 +160,11 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.ReadLine();
         }
 
-        private static void MasalariGetir()
+        private static void MasaSayisiVeToplamKapasiteYazdir()
         {
+            Tuple<int, int> masaBilgileri = DataManager.MasaSayisiVeToplamKapasiteGetir();
 
+            Console.WriteLine($"{masaBilgileri.Item1} Adet Masa ve Toplamda {masaBilgileri.Item2} Kapasiteye Sahip");
         }
 
         private static void DegerdenYuksekFiyatliUrunleriGetir()

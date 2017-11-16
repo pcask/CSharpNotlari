@@ -12,9 +12,9 @@ namespace KafeYonetim.Data
     public class DataManager
     {
 
-        //private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+        private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
 
-        private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
+        // private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
 
         private static SqlConnection CreateConnection()
         {
@@ -42,42 +42,58 @@ namespace KafeYonetim.Data
             connection.Close();
         }
 
-        public void KafeBilgisiniYazdir()
+        public static List<Kafe> KafeleriGetir()
         {
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True");
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Kafeler", connection);
 
-            connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
 
-            SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM Kafe", connection);
+                List<Kafe> kafeler = new List<Kafe>();
 
-            // Sorgu sonucu geri değer dönmeyecekse ExecuteNonQuery
-            // Sorgu sonucu tek satır tek sütün yani tek bir veri dönecekse ExecuteScalar
-            // Sorgu sonucu bir satır veya daha fazla ayrıca bir sütün veya daha fazla sütün dönecekse ExecuteReader kullanılır.
-            SqlDataReader result = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Kafe kafe = new Kafe((int)reader["ID"], reader["Ad"].ToString(), reader["AcilisSaati"].ToString(), reader["KapanisSaati"].ToString());
 
-            result.Read();
-            Console.WriteLine($"Kafe Adı: {result["Ad"]}");
-            Console.WriteLine($"Kafe Durum: {result["Durum"]}");
+                    kafeler.Add(kafe);
+                }
 
-            result.Close();
-            connection.Close();
+                return kafeler;
+            }
         }
 
-        public static bool MasaEkle(int masaNo, int kafeID, string Durum)
+        //public static bool MasaEkle(int masaNo, int kafeID, string Durum)
+        //{
+        //    using( var connection = CreateConnection())
+        //    {
+        //        SqlCommand cmd = new SqlCommand("INSERT INTO Masalar (MasaNo, KafeID, Durum) VALUES (@masaNo, @kafeID, @durum)", connection);
+        //        cmd.Parameters.AddWithValue("@masaNo", masaNo);
+        //        cmd.Parameters.AddWithValue("@kafeID", kafeID);
+        //        cmd.Parameters.AddWithValue("@durum", Durum);
+
+        //        int result = cmd.ExecuteNonQuery();
+
+        //        if (result > 0)
+        //            return true;
+
+        //        return false;
+        //    }
+        //}
+
+        public static int MasaEkle(Masa masa)
         {
-            using( var connection = CreateConnection())
+            using (var connection = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Masalar (MasaNo, KafeID, Durum) VALUES (@masaNo, @kafeID, @durum)", connection);
-                cmd.Parameters.AddWithValue("@masaNo", masaNo);
-                cmd.Parameters.AddWithValue("@kafeID", kafeID);
-                cmd.Parameters.AddWithValue("@durum", Durum);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Masalar (MasaNo, KafeID, Durum, KisiSayisi) VALUES (@masaNo, @kafeID, @durum, @kisiSayisi); SELECT scope_identity()", connection);
 
-                int result = cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@masaNo", masa.MasaNo);
+                cmd.Parameters.AddWithValue("@kafeID", masa.Kafe.ID);
+                cmd.Parameters.AddWithValue("@durum", masa.Durum.ToString());
+                cmd.Parameters.AddWithValue("@kisiSayisi", masa.KisiSayisi);
 
-                if (result > 0)
-                    return true;
-
-                return false;
+                int masaID = Convert.ToInt32(cmd.ExecuteScalar());
+                return masaID;
             }
         }
 
@@ -115,23 +131,61 @@ namespace KafeYonetim.Data
             return urunListesi;
         }
 
-        //public static List<Masa> MasalariGetir()
-        //{
-        //    using (var connection = CreateConnection())
-        //    {
-        //        SqlCommand cmd = new SqlCommand("SELECT * FROM Urunler", connection);
+        public static Kafe KafeGetir(string kafeID)
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Kafeler WHERE ID = @kafeID", connection);
 
-        //        SqlDataReader reader = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@kafeID", kafeID);
 
-        //        List<Masa> masalar = new List<Masa>();
+                SqlDataReader reader = cmd.ExecuteReader();
 
-        //        while (reader.Read())
-        //        {
-        //            Kafe kafe = new Kafe()
-        //            Masa masa = new Masa((int)reader["MasaNo"],)
-        //        }
-        //    }
-        //}
+                reader.Read();
+
+                Kafe kafe = new Kafe((int)reader["ID"], reader["Ad"].ToString(), reader["AcilisSaati"].ToString(), reader["KapanisSaati"].ToString());
+
+                return kafe;
+            }
+        }
+
+        public static List<Masa> MasalariGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Masalar", connection);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Masa> masalar = new List<Masa>();
+
+                while (reader.Read())
+                {
+                    Masa masa = new Masa(reader["MasaNo"].ToString(), KafeGetir(reader["KafeID"].ToString()));
+
+                    masa.Durum = reader["Durum"].ToString() == "Dolu" ? MasaDurum.Dolu : MasaDurum.Bos;
+                    masa.KisiSayisi = Convert.ToByte(reader["KisiSayisi"]);
+
+                    masalar.Add(masa);
+                }
+
+                return masalar;
+            }
+        }
+
+        public static Tuple<int, int> MasaSayisiVeToplamKapasiteGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) AS MasaSayisi, SUM(KisiSayisi) AS KisiSayisi FROM Masalar", connection);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                return new Tuple<int, int>((int)reader["MasaSayisi"], (int)reader["KisiSayisi"]);
+            }
+        }
 
         public static List<Urun> UrunleriGetir()
         {
@@ -170,7 +224,7 @@ namespace KafeYonetim.Data
             {
                 var command = new SqlCommand($"DELETE FROM Urunler WHERE ID IN ({idList}) ", connection);
 
-               return command.ExecuteNonQuery();
+                return command.ExecuteNonQuery();
             }
         }
     }

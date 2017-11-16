@@ -9,6 +9,21 @@ namespace KafeYonetim.Lib
     public class Kafe
     {
         // Constructor Metod = İnşa Edici Metod / Yapılandırıcı Metod
+        public Kafe(int id, string ad, string acilisSaati, string kapanisSaati)
+        {
+            ID = id;
+            Ad = ad;
+            AcilisSaati = acilisSaati;
+            KapanisSaati = kapanisSaati;
+
+            Durum = KafeDurum.Kapali;
+
+            Urunler = new List<Urun>();
+            Calisanlar = new List<Calisan>();
+            Masalar = new List<Masa>();
+            Siparisler = new List<Siparis>();
+        }
+
         public Kafe(string ad, string acilisSaati, string kapanisSaati)
         {
             Ad = ad;
@@ -23,6 +38,7 @@ namespace KafeYonetim.Lib
             Siparisler = new List<Siparis>();
         }
 
+        public int ID { get; private set; }
         public string Ad { get; private set; }
         public string AcilisSaati { get; private set; }
         public string KapanisSaati { get; private set; }

@@ -4,18 +4,18 @@ namespace KafeYonetim.Lib
 {
     public class Masa
     {
-        public Masa(int masaNo, Kafe kafe)
+        public Masa(string masaNo, Kafe kafe)
         {
             MasaNo = masaNo;
             Kafe = kafe;
         }
 
-
-        public int MasaNo { get; private set; }
+        public string MasaNo { get; private set; }
         public Siparis Siparis { get; set; }
         public MasaDurum Durum { get; set; }
         public Garson Garson { get; set; }
         public Kafe Kafe { get; private set; }
+        public byte KisiSayisi { get; set; }
 
         public void GarsonCagir()
         {
