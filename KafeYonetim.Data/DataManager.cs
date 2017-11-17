@@ -250,22 +250,45 @@ namespace KafeYonetim.Data
         {
             using (var connection = CreateConnection())
             {
-                var commandGarson = new SqlCommand("INSERT INTO Garson (Bahsis) VALUES(@bahsis); SELECT scope_identity()", connection);
-                commandGarson.Parameters.AddWithValue("@bahsis", garson.Bahsis);
+                SqlCommand cmd = new SqlCommand(@"
+                            INSERT INTO Garsonlar (Bahsis) VALUES(@bahsis);
+                            DECLARE @eklenenGarsonID int;
+                            SET @eklenenGarsonID = scope_identity();
+                            INSERT INTO Calisan (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenGarsonID); SELECT scope_identity()", connection);
 
-                var id = Convert.ToInt32(commandGarson.ExecuteScalar());
+                cmd.Parameters.AddWithValue("@bahsis", garson.Bahsis);
+                cmd.Parameters.AddWithValue("@Ad", garson.Ad);
+                cmd.Parameters.AddWithValue("@IseGirisTarihi", garson.IseGirisTarihi);
+                cmd.Parameters.AddWithValue("@MesaideMi", garson.MesaideMi);
+                cmd.Parameters.AddWithValue("@KafeId", garson.Kafe.ID);
+                cmd.Parameters.AddWithValue("@Durum", garson.Durum);
+                cmd.Parameters.AddWithValue("@GorevId", 2);
 
-                var commandCalisan = new SqlCommand("INSERT INTO Calisan (Isim, IseGirisTarihi, MesaideMi, KafeId, Durum, GorevId, GorevTabloId) VALUES (@Isim, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @GorevTabloId); SELECT scope_identity()", connection);
+                var result = Convert.ToInt32(cmd.ExecuteScalar());
 
-                commandCalisan.Parameters.AddWithValue("@Isim", garson.Isim);
-                commandCalisan.Parameters.AddWithValue("@IseGirisTarihi", garson.IseGirisTarihi);
-                commandCalisan.Parameters.AddWithValue("@MesaideMi", garson.MesaideMi);
-                commandCalisan.Parameters.AddWithValue("@KafeId", garson.Kafe.Id);
-                commandCalisan.Parameters.AddWithValue("@Durum", garson.Durum);
-                commandCalisan.Parameters.AddWithValue("@GorevId", 2);
-                commandCalisan.Parameters.AddWithValue("@GorevTabloId", id);
+                return result;
+            }
+        }
 
-                var result = Convert.ToInt32(commandCalisan.ExecuteScalar());
+        public static int AsciEkle(Asci asci)
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+                            INSERT INTO Ascilar (Puan) VALUES(@puan);
+                            DECLARE @eklenenAsciID int;
+                            SET @eklenenGarsonID = scope_identity();
+                            INSERT INTO Calisan (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenAsciID); SELECT scope_identity()", connection);
+
+                cmd.Parameters.AddWithValue("@puan", asci.Puan);
+                cmd.Parameters.AddWithValue("@Ad", asci.Ad);
+                cmd.Parameters.AddWithValue("@IseGirisTarihi", asci.IseGirisTarihi);
+                cmd.Parameters.AddWithValue("@MesaideMi", asci.MesaideMi);
+                cmd.Parameters.AddWithValue("@KafeId", asci.Kafe.ID);
+                cmd.Parameters.AddWithValue("@Durum", asci.Durum);
+                cmd.Parameters.AddWithValue("@GorevId", 1);
+
+                var result = Convert.ToInt32(cmd.ExecuteScalar());
 
                 return result;
             }

@@ -13,6 +13,9 @@ namespace KafeYonetim.Lib
 
         }
 
+        public byte Puan { get; set; }
+
+
         public void SiparisiHazirla()
         {
             Console.WriteLine("Siparis hazırlandı");

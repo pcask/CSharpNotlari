@@ -8,16 +8,16 @@ namespace KafeYonetim.Lib
 {
     public class Calisan
     {
-        public Calisan(string isim, DateTime girisTarihi, Kafe kafe)
+        public Calisan(string ad, DateTime girisTarihi, Kafe kafe)
         {
-            Isim = isim;
+            Ad = ad;
             IseGirisTarihi = girisTarihi;
             MesaideMi = false;
             Kafe = kafe;
         }
 
         public int ID { get; set; }
-        public string Isim { get; private set; }
+        public string Ad { get; private set; }
         public DateTime IseGirisTarihi { get; private set; }
         public bool MesaideMi { get; private set; }
         public CalisanDurum Durum { get; set; }

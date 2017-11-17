@@ -13,7 +13,7 @@ namespace KafeYonetim.Lib
 
         }
 
-        public int Bahsis { get; set; }
+        public float Bahsis { get; set; }
 
         public void MasaAc()
         {

@@ -23,6 +23,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("5. Ürün Sil");
                 Console.WriteLine("6. Masa Sayısı ve Toplam Kapasite Bilgisini Getir");
                 Console.WriteLine("7. Masa Ekle");
+                Console.WriteLine("8. Garson Ekle");
+                Console.WriteLine("9. Aşçı Ekle");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -36,6 +38,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "5": UrunleriSil(); break;
                     case "6": MasaSayisiVeToplamKapasiteYazdir(); break;
                     case "7": MasaEkle(); break;
+                    case "8": GarsonEkle(); break;
+                    case "9": AsciEkle(); break;
                     case "h": return;
                     default:
                         break;
@@ -112,7 +116,6 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             Console.WriteLine("Masa Başarıyla Eklendi");
         }
-
 
         private static void KafeleriListele()
         {
@@ -211,6 +214,36 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.WriteLine(DataManager.SecilenUrunleriSil(idList) + " Adet Ürün Silindi");
 
             UrunListesiniYazdir();
+        }
+
+        private static void GarsonEkle()
+        {
+            Console.Clear();
+
+            Console.Write("Adı :");
+            string ad = Console.ReadLine();
+
+            Garson garson = new Garson(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
+            garson.Durum = CalisanDurum.Uygun;
+
+            int sonuc = DataManager.GarsonEkle(garson);
+
+            Console.WriteLine((sonuc > 0) ? "Garson Başarılı Bir Şekilde Eklendi" : "Garson Ekleme Başarısız!!");
+        }
+
+        private static void AsciEkle()
+        {
+            Console.Clear();
+
+            Console.Write("Adı :");
+            string ad = Console.ReadLine();
+
+            Asci asci = new Asci(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
+            asci.Durum = CalisanDurum.Uygun;
+
+            int sonuc = DataManager.AsciEkle(asci);
+
+            Console.WriteLine((sonuc > 0) ? "Aşçı Başarılı Bir Şekilde Eklendi" : "Aşçı Ekleme Başarısız!!");
         }
     }
 }
