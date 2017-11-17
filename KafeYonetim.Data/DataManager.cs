@@ -245,5 +245,30 @@ namespace KafeYonetim.Data
                 return command.ExecuteNonQuery();
             }
         }
+
+        public static int GarsonEkle(Garson garson)
+        {
+            using (var connection = CreateConnection())
+            {
+                var commandGarson = new SqlCommand("INSERT INTO Garson (Bahsis) VALUES(@bahsis); SELECT scope_identity()", connection);
+                commandGarson.Parameters.AddWithValue("@bahsis", garson.Bahsis);
+
+                var id = Convert.ToInt32(commandGarson.ExecuteScalar());
+
+                var commandCalisan = new SqlCommand("INSERT INTO Calisan (Isim, IseGirisTarihi, MesaideMi, KafeId, Durum, GorevId, GorevTabloId) VALUES (@Isim, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @GorevTabloId); SELECT scope_identity()", connection);
+
+                commandCalisan.Parameters.AddWithValue("@Isim", garson.Isim);
+                commandCalisan.Parameters.AddWithValue("@IseGirisTarihi", garson.IseGirisTarihi);
+                commandCalisan.Parameters.AddWithValue("@MesaideMi", garson.MesaideMi);
+                commandCalisan.Parameters.AddWithValue("@KafeId", garson.Kafe.Id);
+                commandCalisan.Parameters.AddWithValue("@Durum", garson.Durum);
+                commandCalisan.Parameters.AddWithValue("@GorevId", 2);
+                commandCalisan.Parameters.AddWithValue("@GorevTabloId", id);
+
+                var result = Convert.ToInt32(commandCalisan.ExecuteScalar());
+
+                return result;
+            }
+        }
     }
 }

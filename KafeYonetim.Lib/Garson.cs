@@ -13,6 +13,8 @@ namespace KafeYonetim.Lib
 
         }
 
+        public int Bahsis { get; set; }
+
         public void MasaAc()
         {
             Console.WriteLine("Masa açıldı");
