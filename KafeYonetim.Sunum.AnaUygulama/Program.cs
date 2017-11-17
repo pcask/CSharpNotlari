@@ -25,6 +25,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("7. Masa Ekle");
                 Console.WriteLine("8. Garson Ekle");
                 Console.WriteLine("9. Aşçı Ekle");
+                Console.WriteLine("10. Çalışanlari Listele");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -40,6 +41,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "7": MasaEkle(); break;
                     case "8": GarsonEkle(); break;
                     case "9": AsciEkle(); break;
+                    case "10": CalisanlariListele(); break;
                     case "h": return;
                     default:
                         break;
@@ -223,7 +225,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.Write("Adı :");
             string ad = Console.ReadLine();
 
-            Garson garson = new Garson(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
+            Garson garson = new Garson(ad, DateTime.Now, DataManager.AktifKafeyiGetir(),"sads");
             garson.Durum = CalisanDurum.Uygun;
 
             int sonuc = DataManager.GarsonEkle(garson);
@@ -238,12 +240,37 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.Write("Adı :");
             string ad = Console.ReadLine();
 
-            Asci asci = new Asci(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
+            Asci asci = new Asci(ad, DateTime.Now, DataManager.AktifKafeyiGetir(),"");
             asci.Durum = CalisanDurum.Uygun;
 
-            int sonuc = DataManager.AsciEkle(asci);
+            int eklenenCalisanID = DataManager.AsciEkle(asci);
 
-            Console.WriteLine((sonuc > 0) ? "Aşçı Başarılı Bir Şekilde Eklendi" : "Aşçı Ekleme Başarısız!!");
+            Console.WriteLine((eklenenCalisanID > 0) ? $"Aşçı {eklenenCalisanID} id'si ile Başarılı Bir Şekilde Eklendi" : "Aşçı Ekleme Başarısız!!");
+        }
+
+        private static void CalisanlariListele()
+        {
+            Console.Clear();
+
+            List<Calisan> calisanlar = DataManager.CalisanlariGetir();
+
+            Console.WriteLine("Çalışanlar Listesi\n".PadLeft(40));
+
+            Console.Write("ID".PadRight(8));
+            Console.Write("Ad".PadRight(15));
+            Console.Write("İşe Giriş Tarihi".PadRight(20));
+            Console.Write("Görevi".PadRight(20));
+            Console.WriteLine("\n");
+
+            foreach (var calisan in calisanlar)
+            {
+                Console.Write($"{calisan.ID}".PadRight(8));
+                Console.Write($"{calisan.Ad}".PadRight(15));
+                Console.Write($"{calisan.IseGirisTarihi.ToString("dd-MM-yyyy")}".PadRight(20));
+                Console.Write($"{calisan.Gorev}".PadRight(20));
+
+                Console.WriteLine();
+            }
         }
     }
 }

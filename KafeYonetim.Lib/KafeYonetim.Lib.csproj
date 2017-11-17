@@ -44,6 +44,7 @@
     <Compile Include="Calisan.cs" />
     <Compile Include="CalisanDurum.cs" />
     <Compile Include="Garson.cs" />
+    <Compile Include="Gorev.cs" />
     <Compile Include="Kafe.cs" />
     <Compile Include="KafeDurum.cs" />
     <Compile Include="Kalem.cs" />

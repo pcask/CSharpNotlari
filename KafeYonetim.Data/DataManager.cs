@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KafeYonetim.Lib;
-
+using System.Data;
 
 namespace KafeYonetim.Data
 {
@@ -254,7 +254,7 @@ namespace KafeYonetim.Data
                             INSERT INTO Garsonlar (Bahsis) VALUES(@bahsis);
                             DECLARE @eklenenGarsonID int;
                             SET @eklenenGarsonID = scope_identity();
-                            INSERT INTO Calisan (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenGarsonID); SELECT scope_identity()", connection);
+                            INSERT INTO Calisanlar (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenGarsonID); SELECT scope_identity()", connection);
 
                 cmd.Parameters.AddWithValue("@bahsis", garson.Bahsis);
                 cmd.Parameters.AddWithValue("@Ad", garson.Ad);
@@ -270,27 +270,74 @@ namespace KafeYonetim.Data
             }
         }
 
+        //public static int AsciEkle(Asci asci)
+        //{
+        //    using (var connection = CreateConnection())
+        //    {
+        //        SqlCommand cmd = new SqlCommand(@"
+        //                    INSERT INTO Ascilar (Puan) VALUES(@puan);
+        //                    DECLARE @eklenenAsciID int;
+        //                    SET @eklenenGarsonID = scope_identity();
+        //                    INSERT INTO Calisanlar (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenAsciID); SELECT scope_identity()", connection);
+
+        //        cmd.Parameters.AddWithValue("@puan", asci.Puan);
+        //        cmd.Parameters.AddWithValue("@Ad", asci.Ad);
+        //        cmd.Parameters.AddWithValue("@IseGirisTarihi", asci.IseGirisTarihi);
+        //        cmd.Parameters.AddWithValue("@MesaideMi", asci.MesaideMi);
+        //        cmd.Parameters.AddWithValue("@KafeId", asci.Kafe.ID);
+        //        cmd.Parameters.AddWithValue("@Durum", asci.Durum);
+        //        cmd.Parameters.AddWithValue("@GorevId", 1);
+
+        //        var result = Convert.ToInt32(cmd.ExecuteScalar());
+
+        //        return result;
+        //    }
+        //}
+
+        // Stored Procedure Çağrısı ile Aşçı Ekleme
         public static int AsciEkle(Asci asci)
         {
             using (var connection = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand(@"
-                            INSERT INTO Ascilar (Puan) VALUES(@puan);
-                            DECLARE @eklenenAsciID int;
-                            SET @eklenenGarsonID = scope_identity();
-                            INSERT INTO Calisan (Ad, IseGirisTarihi, MesaideMi, KafeID, Durum, GorevID, GorevTabloID) VALUES (@Ad, @IseGirisTarihi, @MesaideMi, @KafeId, @Durum, @GorevId, @eklenenAsciID); SELECT scope_identity()", connection);
+                SqlCommand cmd = new SqlCommand("AsciEkle", connection);
+
+                // Stored Procedure den return edilecek değeri yakalamak için;
+                SqlParameter returnValue = new SqlParameter();
+                returnValue.Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(returnValue);
 
                 cmd.Parameters.AddWithValue("@puan", asci.Puan);
+                cmd.Parameters.AddWithValue("@kafeID", asci.Kafe.ID);
                 cmd.Parameters.AddWithValue("@Ad", asci.Ad);
-                cmd.Parameters.AddWithValue("@IseGirisTarihi", asci.IseGirisTarihi);
-                cmd.Parameters.AddWithValue("@MesaideMi", asci.MesaideMi);
-                cmd.Parameters.AddWithValue("@KafeId", asci.Kafe.ID);
-                cmd.Parameters.AddWithValue("@Durum", asci.Durum);
-                cmd.Parameters.AddWithValue("@GorevId", 1);
 
-                var result = Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                return result;
+                cmd.ExecuteScalar();
+
+                return (int)returnValue.Value;
+            }
+        }
+
+        public static List<Calisan> CalisanlariGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Calisanlar CLS INNER JOIN CalisanGorevler CLSG ON CLS.GorevID = CLSG.ID", connection);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Calisan> calisanlar = new List<Calisan>();
+
+                while (reader.Read())
+                {
+                    Calisan calisan = new Calisan(reader["Ad"].ToString(), (DateTime)reader["IseGirisTarihi"], KafeGetir(reader["KafeID"].ToString()),reader["GorevAdi"].ToString());
+
+                    calisan.ID = (int)reader["ID"];
+
+                    calisanlar.Add(calisan);
+                }
+
+                return calisanlar;
             }
         }
     }

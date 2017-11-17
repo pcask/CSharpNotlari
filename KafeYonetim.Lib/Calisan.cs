@@ -8,12 +8,13 @@ namespace KafeYonetim.Lib
 {
     public class Calisan
     {
-        public Calisan(string ad, DateTime girisTarihi, Kafe kafe)
+        public Calisan(string ad, DateTime girisTarihi, Kafe kafe, string gorev)
         {
             Ad = ad;
             IseGirisTarihi = girisTarihi;
             MesaideMi = false;
             Kafe = kafe;
+            Gorev = gorev;
         }
 
         public int ID { get; set; }
@@ -23,6 +24,8 @@ namespace KafeYonetim.Lib
         public CalisanDurum Durum { get; set; }
         public List<Siparis> Siparisler { get; set; }
         public Kafe Kafe { get; set; }
+        public string Gorev { get; private set; }
+
 
         public void MesaiyeBasla()
         {
