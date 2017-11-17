@@ -225,7 +225,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.Write("Adı :");
             string ad = Console.ReadLine();
 
-            Garson garson = new Garson(ad, DateTime.Now, DataManager.AktifKafeyiGetir(),"sads");
+            Garson garson = new Garson(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
             garson.Durum = CalisanDurum.Uygun;
 
             int sonuc = DataManager.GarsonEkle(garson);
