@@ -318,6 +318,30 @@ namespace KafeYonetim.Data
             }
         }
 
+        public static int BulasikciEkle(Bulasikci bulasikci)
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("BulasikciEkle", connection);
+
+                // Stored Procedure den return edilecek değeri yakalamak için;
+                SqlParameter returnValue = new SqlParameter();
+                returnValue.Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(returnValue);
+
+                cmd.Parameters.AddWithValue("@TemizlikPuani", bulasikci.TemizlikPuani);
+                cmd.Parameters.AddWithValue("@kafeID", bulasikci.Kafe.ID);
+                cmd.Parameters.AddWithValue("@Ad", bulasikci.Ad);
+                cmd.Parameters.AddWithValue("@Durum", bulasikci.Durum);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.ExecuteScalar();
+
+                return (int)returnValue.Value;
+            }
+        }
+
         public static List<Calisan> CalisanlariGetir()
         {
             using (var connection = CreateConnection())

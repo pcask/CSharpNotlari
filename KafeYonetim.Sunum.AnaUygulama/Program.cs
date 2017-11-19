@@ -25,7 +25,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("7. Masa Ekle");
                 Console.WriteLine("8. Garson Ekle");
                 Console.WriteLine("9. Aşçı Ekle");
-                Console.WriteLine("10. Çalışanlari Listele");
+                Console.WriteLine("10. Bulaşıkçı Ekle");
+                Console.WriteLine("11. Çalışanlari Listele");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -41,7 +42,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "7": MasaEkle(); break;
                     case "8": GarsonEkle(); break;
                     case "9": AsciEkle(); break;
-                    case "10": CalisanlariListele(); break;
+                    case "10": BulasikciEkle(); break;
+                    case "11": CalisanlariListele(); break;
                     case "h": return;
                     default:
                         break;
@@ -247,6 +249,21 @@ namespace KafeYonetim.Sunum.AnaUygulama
 
             Console.WriteLine((eklenenCalisanID > 0) ? $"Aşçı {eklenenCalisanID} id'si ile Başarılı Bir Şekilde Eklendi" : "Aşçı Ekleme Başarısız!!");
         }
+        private static void BulasikciEkle()
+        {
+            Console.Clear();
+
+            Console.Write("Adı :");
+            string ad = Console.ReadLine();
+
+            Bulasikci bulasikci = new Bulasikci(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
+
+            bulasikci.Durum = CalisanDurum.Uygun;
+
+            int eklenenCalisanID = DataManager.BulasikciEkle(bulasikci);
+
+            Console.WriteLine((eklenenCalisanID > 0) ? $"Bulaşıkçı {eklenenCalisanID} id'si ile Başarılı Bir Şekilde Eklendi" : "Bulaşıkçı Ekleme İşlemi Başarısız!!");
+        }
 
         private static void CalisanlariListele()
         {
@@ -267,7 +284,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.Write($"{calisan.ID}".PadRight(8));
                 Console.Write($"{calisan.Ad}".PadRight(15));
                 Console.Write($"{calisan.IseGirisTarihi.ToString("dd-MM-yyyy")}".PadRight(20));
-                Console.Write($"{calisan.Gorev}".PadRight(20));
+                Console.Write($"{calisan.Gorev.GorevAdi}".PadRight(20));
 
                 Console.WriteLine();
             }
