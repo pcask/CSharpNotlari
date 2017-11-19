@@ -8,7 +8,7 @@ namespace KafeYonetim.Lib
 {
     public class Asci : Calisan
     {
-        public Asci(string isim, DateTime girisTarihi, Kafe kafe, string gorev): base(isim, girisTarihi, kafe, gorev)
+        public Asci(string isim, DateTime girisTarihi, Kafe kafe): base(isim, girisTarihi, kafe)
         {
 
         }

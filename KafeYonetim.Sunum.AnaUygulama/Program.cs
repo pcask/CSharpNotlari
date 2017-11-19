@@ -240,7 +240,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
             Console.Write("Adı :");
             string ad = Console.ReadLine();
 
-            Asci asci = new Asci(ad, DateTime.Now, DataManager.AktifKafeyiGetir(),"");
+            Asci asci = new Asci(ad, DateTime.Now, DataManager.AktifKafeyiGetir());
             asci.Durum = CalisanDurum.Uygun;
 
             int eklenenCalisanID = DataManager.AsciEkle(asci);

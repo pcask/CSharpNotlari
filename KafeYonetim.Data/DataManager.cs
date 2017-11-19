@@ -12,9 +12,9 @@ namespace KafeYonetim.Data
     public class DataManager
     {
 
-        private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+        // private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
 
-        // private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
+        private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
 
         private static SqlConnection CreateConnection()
         {
@@ -330,9 +330,10 @@ namespace KafeYonetim.Data
 
                 while (reader.Read())
                 {
-                    Calisan calisan = new Calisan(reader["Ad"].ToString(), (DateTime)reader["IseGirisTarihi"], KafeGetir(reader["KafeID"].ToString()),reader["GorevAdi"].ToString());
+                    Calisan calisan = new Calisan(reader["Ad"].ToString(), (DateTime)reader["IseGirisTarihi"], KafeGetir(reader["KafeID"].ToString()));
 
                     calisan.ID = (int)reader["ID"];
+                    calisan.Gorev.GorevAdi = reader["GorevAdi"].ToString();
 
                     calisanlar.Add(calisan);
                 }
