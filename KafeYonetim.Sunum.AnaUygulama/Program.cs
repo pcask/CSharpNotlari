@@ -13,7 +13,7 @@ namespace KafeYonetim.Sunum.AnaUygulama
         static void Main(string[] args)
         {
             // 210 tane Garson Eklendi
-            //CokluGarsonEkle();
+            CokluGarsonEkle();
 
             do
             {
