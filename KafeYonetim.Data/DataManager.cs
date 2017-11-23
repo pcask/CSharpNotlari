@@ -12,9 +12,9 @@ namespace KafeYonetim.Data
     public class DataManager
     {
 
-        private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
+        // private static string connStr = "Data Source=DESKTOP-S3O5AOR;Initial Catalog=KafeYonetim;Integrated Security=True";
 
-        // private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
+        private static string connStr = "Data Source=PCASK\\MSSQLSERVER2016D;Initial Catalog=KafeYonetim;Integrated Security=True";
 
         private static SqlConnection CreateConnection()
         {
@@ -363,6 +363,72 @@ namespace KafeYonetim.Data
                 }
 
                 return calisanlar;
+            }
+        }
+
+        public static List<Garson> GarsonlariGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                List<Garson> garsonlar = new List<Garson>();
+
+                SqlCommand cmd = new SqlCommand(@"SELECT GLS.ID, Ad, IseGirisTarihi, Bahsis FROM Calisanlar CLS INNER JOIN Garsonlar GSL ON CLS.GorevID = GSL.ID WHERE CLS.GorevID = 2", connection);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Garson garson = new Garson(reader["Ad"].ToString(), (DateTime)reader["IseGirisTarihi"], AktifKafeyiGetir());
+
+                    garson.ID = (int)reader["ID"];
+                    garson.Bahsis = Convert.ToSingle(reader["Bahsis"]);
+
+                    garsonlar.Add(garson);
+                }
+
+                return garsonlar;
+            }
+        }
+
+        public static int ToplamSayfaSayisiniGetir()
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("SELECT CEILING(COUNT(*) / 20.0) AS ToplamSayfa FROM Garsonlar", connection);
+
+                int toplamSayfaSayisi = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return toplamSayfaSayisi;
+            }
+        }
+
+        public static List<Garson> SayfaNumarasiIleGarsonlariGetir(int sayfaNumarasi, int sayfaBasinaGarsonSayisi)
+        {
+            using (var connection = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand(@"SELECT GSL.ID, Bahsis, Ad, IseGirisTarihi FROM 
+                                                   Garsonlar GSL INNER JOIN Calisanlar CLS ON GSL.ID = CLS.GorevTabloID                      WHERE CLS.GorevID = 2 ORDER BY GSL.ID 
+                                                   OFFSET(@sayfaSayisi * @sayfaBasinaGarsonSayisi) 
+                                                   ROWS FETCH NEXT 20 ROWS ONLY", connection);
+
+                cmd.Parameters.AddWithValue("@sayfaSayisi", sayfaNumarasi - 1);
+                cmd.Parameters.AddWithValue("@sayfaBasinaGarsonSayisi", sayfaBasinaGarsonSayisi);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Garson> garsonlar = new List<Garson>();
+
+                while (reader.Read())
+                {
+                    Garson garson = new Garson(reader["Ad"].ToString(), (DateTime)reader["IseGirisTarihi"], AktifKafeyiGetir());
+
+                    garson.ID = (int)reader["ID"];
+                    garson.Bahsis = Convert.ToSingle(reader["Bahsis"]);
+
+                    garsonlar.Add(garson);
+                }
+
+                return garsonlar;
             }
         }
     }

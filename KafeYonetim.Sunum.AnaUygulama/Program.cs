@@ -12,6 +12,9 @@ namespace KafeYonetim.Sunum.AnaUygulama
     {
         static void Main(string[] args)
         {
+            // 210 tane Garson Eklendi
+            //CokluGarsonEkle();
+
             do
             {
                 Console.Clear();
@@ -27,6 +30,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.WriteLine("9. Aşçı Ekle");
                 Console.WriteLine("10. Bulaşıkçı Ekle");
                 Console.WriteLine("11. Çalışanlari Listele");
+                Console.WriteLine("12. Garsonları Listele");
+                Console.WriteLine("13. Garsonları Sayfalı Listele");
                 Console.WriteLine();
                 Console.Write("Bir seçim yapınız (çıkmak için H harfine basınız): ");
                 var secim = Console.ReadLine();
@@ -44,6 +49,8 @@ namespace KafeYonetim.Sunum.AnaUygulama
                     case "9": AsciEkle(); break;
                     case "10": BulasikciEkle(); break;
                     case "11": CalisanlariListele(); break;
+                    case "12": GarsonlariListele(DataManager.GarsonlariGetir()); break;
+                    case "13": GarsonlariSayfaliListele(); break;
                     case "h": return;
                     default:
                         break;
@@ -285,6 +292,66 @@ namespace KafeYonetim.Sunum.AnaUygulama
                 Console.Write($"{calisan.Ad}".PadRight(15));
                 Console.Write($"{calisan.IseGirisTarihi.ToString("dd-MM-yyyy")}".PadRight(20));
                 Console.Write($"{calisan.Gorev.GorevAdi}".PadRight(20));
+
+                Console.WriteLine();
+            }
+        }
+
+        private static void CokluGarsonEkle()
+        {
+            Random rnd = new Random();
+
+            for (int i = 0; i < 210; i++)
+            {
+                Garson garson = new Garson(FakeData.NameData.GetFirstName(), DateTime.Now, DataManager.AktifKafeyiGetir());
+
+                garson.Bahsis = rnd.Next(0, 100);
+
+                DataManager.GarsonEkle(garson);
+            }
+        }
+
+        private static void GarsonlariSayfaliListele()
+        {
+            List<Garson> garsonlar = DataManager.SayfaNumarasiIleGarsonlariGetir(1, 20);
+
+            GarsonlariListele(garsonlar);
+
+            int toplamSayfaSayisi = DataManager.ToplamSayfaSayisiniGetir();
+            Console.WriteLine("\nToplam Sayfa Saysı: " + toplamSayfaSayisi);
+            Console.Write("\nLütfen Görmek İstediğiniz Sayfanın Numarasını Giriniz: ");
+
+            int sayfaNumarasi = int.Parse(Console.ReadLine());
+
+            if (sayfaNumarasi >= 1 && sayfaNumarasi <= toplamSayfaSayisi)
+            {
+                garsonlar = DataManager.SayfaNumarasiIleGarsonlariGetir(sayfaNumarasi, 20);
+
+                GarsonlariListele(garsonlar);
+            }
+            else
+                Console.WriteLine("Lütfen Geçerli Bir Sayfa Numarası Giriniz");
+        }
+
+        private static void GarsonlariListele(List<Garson> garsonlar)
+        {
+            Console.Clear();
+
+            Console.WriteLine("Garsonlar\n".PadLeft(30));
+
+            Console.Write("ID");
+            Console.Write("Ad".PadLeft(10));
+            Console.Write("İşe Giriş Tarihi".PadLeft(23));
+            Console.Write("Bahşiş".PadLeft(10));
+
+            Console.WriteLine("\n");
+
+            foreach (var garson in garsonlar)
+            {
+                Console.Write($"{garson.ID}");
+                Console.Write($"{garson.Ad}".PadLeft(13));
+                Console.Write($"{garson.IseGirisTarihi.ToString("dd-MM-yyyy")}".PadLeft(15));
+                Console.Write($"{garson.Bahsis}".PadLeft(15));
 
                 Console.WriteLine();
             }
